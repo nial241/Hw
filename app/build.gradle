@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'key0'
+            keyPassword 'nial241'
+            storeFile file('C:/Users/User/Desktop/JLearn/tinkoff/fintech_hw/hw/hw/app/key/key1.jks')
+            storePassword 'nial241'
+        }
+    }
     compileSdkVersion 26
     buildToolsVersion "26.0.0"
     defaultConfig {
@@ -15,12 +23,27 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        prodDebug {
+            signingConfig signingConfigs.config
+        }
+    }
+    productFlavors {
+        redFlavor {
+            resValue("color", "background", "#F50000")
+        }
+        blueFlavor {
+            resValue("color", "background", "#303F9F")
+        }
+        greenFlavor {
+            resValue("color", "background", "#00F500")
         }
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
