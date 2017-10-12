@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'key0'
             keyPassword 'nial241'
-            storeFile file('C:/Users/User/Desktop/JLearn/tinkoff/fintech_hw/hw/hw/app/key/key1.jks')
+            storeFile file('app/key/key1.jks')
             storePassword 'nial241'
         }
     }
@@ -13,7 +13,7 @@ android {
     buildToolsVersion "26.0.0"
     defaultConfig {
         applicationId "com.example.user.hw"
-        minSdkVersion 21
+        minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -47,7 +47,10 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    // - для тестов
+    //compile 'com.android.support:design:22.0.0'
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:design:26.0.0-alpha1'
     testCompile 'junit:junit:4.12'
 }
