@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    android:background="@color/color_first_fragment"
+    tools:context="com.example.user.hw.FirstFragment">
+
+
+    <Button
+        android:id="@+id/next_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ok_btn_txt"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="22dp" />
+
+    <TextView
+        android:id="@+id/inp_1_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:text="@string/inp_x"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="27dp" />
+
+    <EditText
+        android:id="@+id/inp_num_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:ems="10"
+        android:inputType="number"
+        android:text="1"
+        android:layout_below="@+id/inp_1_textView"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

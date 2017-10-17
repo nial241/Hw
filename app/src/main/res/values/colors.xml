@@ -3,4 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="color_first_fragment">#7febb7</color>
+    <color name="color_second_fragment">#72cbb8</color>
+    <color name="color_third_fragment">#3a9d8e</color>
+    <color name="color_fourth_fragment">#3a9d9b</color>
 </resources>

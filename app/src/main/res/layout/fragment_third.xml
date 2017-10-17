@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    android:background="@color/color_third_fragment"
+    tools:context="com.example.user.hw.ThirdFragment">
+
+
+
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:text="@string/choose_op"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="27dp" />
+
+    <Button
+        android:id="@+id/back_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="14dp"
+        android:layout_marginRight="14dp"
+        android:text="@string/back_btn_txt"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/textView3"
+        android:layout_toStartOf="@+id/textView3"
+        android:layout_marginBottom="18dp" />
+
+    <Button
+        android:id="@+id/mult_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="64dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="26dp"
+        android:text="x"
+        android:layout_below="@+id/textView3"
+        android:layout_alignLeft="@+id/back_btn"
+        android:layout_alignStart="@+id/back_btn" />
+
+    <Button
+        android:id="@+id/div_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="36dp"
+        android:layout_marginStart="36dp"
+        android:text="/"
+        android:layout_alignBaseline="@+id/mult_btn"
+        android:layout_alignBottom="@+id/mult_btn"
+        android:layout_toRightOf="@+id/mult_btn"
+        android:layout_toEndOf="@+id/mult_btn" />
+
+    <Button
+        android:id="@+id/sum_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/mult_btn"
+        android:layout_alignStart="@+id/mult_btn"
+        android:layout_below="@+id/mult_btn"
+        android:layout_marginTop="21dp"
+        android:text="+" />
+
+    <Button
+        android:id="@+id/min_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/sum_btn"
+        android:layout_alignLeft="@+id/div_btn"
+        android:layout_alignStart="@+id/div_btn"
+        android:text="-" />
+
+</RelativeLayout>

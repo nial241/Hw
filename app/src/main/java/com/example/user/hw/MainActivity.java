@@ -39,6 +39,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(sendIntent);
             }
         });
+        Button fragm_btn = (Button) findViewById(R.id.to_fragm_act_btn);
+        fragm_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(),FragmActivity.class);
+                startActivity(intent);
+            }
+        });
         final EditText textField = (EditText) findViewById(R.id.editText);
         Button nextBtn = (Button) findViewById(R.id.next_btn);
         nextBtn.setOnClickListener(new View.OnClickListener() {

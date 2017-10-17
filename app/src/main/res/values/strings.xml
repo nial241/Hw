@@ -11,4 +11,12 @@
     <string name="next_btn">Проверить</string>
     <string name="temp_txt">textView</string>
     <string name="add_activity_txt">Добавить явную активити</string>
+    <string name="to_fragm_act">Работа с фрагментами</string>
+    <string name="inp_x">Введите первое число</string>
+    <string name="inp_y">Введите второе число</string>
+    <string name="back_btn_txt">Назад</string>
+    <string name="choose_op">Выберете действие</string>
+
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
