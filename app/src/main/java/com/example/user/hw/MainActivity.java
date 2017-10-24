@@ -1,81 +1,135 @@
 package com.example.user.hw;
 
-import android.content.Context;
-import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
-//import android.content.DialogInterface;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
-    private static final int REQUEST_CODE = 0;
 
-    //метод start
+    private JSONTask jsTask;
+    private static final String OPEN_WEATHER_MAP_API = "http://api.openweathermap.org/data/2.5/forecast/daily?id=524901&units=metric";
+    private String[] str_arr;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingActionButton);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                start(view.getContext());
-            }
-        });
-        Button shareBtn = (Button) findViewById(R.id.share_btn);
-        shareBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent sendIntent = new Intent();
-                TextView text = (TextView) findViewById(R.id.editText);
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, text.getText().toString());
-                sendIntent.setType("text/plain");
-                startActivity(sendIntent);
-            }
-        });
-        Button fragm_btn = (Button) findViewById(R.id.to_fragm_act_btn);
-        fragm_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(),FragmActivity.class);
-                startActivity(intent);
-            }
-        });
-        final EditText textField = (EditText) findViewById(R.id.editText);
-        Button nextBtn = (Button) findViewById(R.id.next_btn);
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), ResultActivity.class);
-                intent.putExtra("input text", textField.getText().toString());
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivityForResult(intent, REQUEST_CODE);
-            }
-        });
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE) {
-            EditText b = (EditText) findViewById(R.id.editText);
-            TextView res = (TextView) findViewById(R.id.result_txtView);
-            if (resultCode == RESULT_OK) {
-                res.setText(R.string.correct_input_txt);
-            } else if (resultCode == RESULT_CANCELED) {
-                res.setText(R.string.incorrect_input_txt);
-                b.setText(R.string.input_text_view);
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
+        jsTask = new JSONTask();
+        jsTask.execute(OPEN_WEATHER_MAP_API);
     }
 
-    public static void start(Context context) {
-        Intent intent = new Intent(context, ExplActivity.class);
-        context.startActivity(intent);
+    private class JSONTask extends AsyncTask<String, String, RenderJS> {
+
+        @Override
+        protected RenderJS doInBackground(String... params) {
+
+            HttpURLConnection connection = null;
+            BufferedReader reader = null;
+            RenderJS re = new RenderJS();
+            try {
+                URL url = new URL(params[0]);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.addRequestProperty("x-api-key", "2a023dcd620e0366f307ef8e8fb4c823");
+                connection.connect();
+
+                InputStream stream = connection.getInputStream();
+                reader = new BufferedReader(new InputStreamReader(stream));
+                StringBuilder buf = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    buf.append(line);
+                }
+
+                re.Render(new JSONObject(buf.toString()));
+
+                if (str_arr == null)
+                    Thread.sleep(5000);
+
+                return re;
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.getLocalizedMessage();
+            } catch (JSONException e) {
+                e.getMessage();
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
+                }
+                try {
+                    if (reader != null) {
+                        reader.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return re;
+        }
+
+        @Override
+        protected void onPostExecute(final RenderJS result) {
+            super.onPostExecute(result);
+
+            TextView txt = (TextView) findViewById(R.id.textView);
+            txt.setText("Прогноз погоды в Москве на 7 дней");
+
+            ListView listView = (ListView) findViewById(R.id.listView);
+            if (result != null && str_arr == null) {
+                str_arr = new String[7];
+                for (int i = 0; i < 7; i++)
+                    str_arr[i] = result.getDay(i);
+
+            }
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(),
+                    android.R.layout.simple_list_item_1,
+                    str_arr);
+            listView.setAdapter(adapter);
+        }
+    }
+
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        str_arr = savedInstanceState.getStringArray("str_arr");
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putStringArray("str_arr", str_arr);
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (jsTask != null) {
+            jsTask.cancel(true);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (jsTask != null) {
+            jsTask.cancel(true);
+        }
     }
 }
