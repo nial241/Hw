@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DrawView">
+        <attr name="color1" format="color"/>
+
+        <attr name="XName" format="boolean"/>
+        <attr name="YName" format="boolean"/>
+        <attr name="StepsName" format="boolean"/>
+        <attr name="Grid" format="boolean"/>
+        <attr name="LineName" format="boolean"/>
+
+    </declare-styleable>
+</resources>
