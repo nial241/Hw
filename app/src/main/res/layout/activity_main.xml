@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
 
-<com.example.user.drawapplication.DrawView
+<com.example.user.hw.DrawView
     android:id="@+id/Line"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
