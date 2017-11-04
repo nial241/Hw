@@ -1,73 +1,61 @@
 package com.example.user.hw;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.util.Log;
 import android.widget.TextView;
 
-//import android.content.DialogInterface;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.util.Date;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
-    private static final int REQUEST_CODE = 0;
 
-    //метод start
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingActionButton);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                start(view.getContext());
-            }
-        });
-        Button shareBtn = (Button) findViewById(R.id.share_btn);
-        shareBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent sendIntent = new Intent();
-                TextView text = (TextView) findViewById(R.id.editText);
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, text.getText().toString());
-                sendIntent.setType("text/plain");
-                startActivity(sendIntent);
-            }
-        });
-        final EditText textField = (EditText) findViewById(R.id.editText);
-        Button nextBtn = (Button) findViewById(R.id.next_btn);
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), ResultActivity.class);
-                intent.putExtra("input text", textField.getText().toString());
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivityForResult(intent, REQUEST_CODE);
-            }
-        });
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE) {
-            EditText b = (EditText) findViewById(R.id.editText);
-            TextView res = (TextView) findViewById(R.id.result_txtView);
-            if (resultCode == RESULT_OK) {
-                res.setText(R.string.correct_input_txt);
-            } else if (resultCode == RESULT_CANCELED) {
-                res.setText(R.string.incorrect_input_txt);
-                b.setText(R.string.input_text_view);
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
+        //1
+        Point1and2 srcObject_toJson = new Point1and2();
+        srcObject_toJson.setName("name");
+        srcObject_toJson.setAny_map(new HashMap<String, Integer>(3){{
+            put("a",55);
+            put("b",85);
+            put("c",56);}});
+        Gson gson_builder = new GsonBuilder()
+                .setExclusionStrategies(new ExclStrat())
+                .create();
+        String json_with_ignored_field = gson_builder.toJson(srcObject_toJson);
+        Log.d("Point1",json_with_ignored_field);
+        TextView txt1 = (TextView) findViewById(R.id.textView2);
+        txt1.setText(json_with_ignored_field);
+        //2
+        /*Type stringStringMap = new TypeToken<HashMap<String,HashMap<Object,Object>>>(){}.getType();
+        Gson g = new Gson();
+        HashMap<String,HashMap<Object,Object>> mp = new Gson().fromJson(
+                "{\"name\":\"name\",\"any_map\":{\"a\":\"55\",\"b\":\"85\",\"c\":\"56\"}}",stringStringMap);
+        Log.d("test",mp.toString());
+        */
+
+        //3
+        Gson g3 = new GsonBuilder()
+                .registerTypeAdapter(Point3.class, new Point3Deserializer())
+                .create();
+        Point3 point3 =  g3.fromJson("{\"money_amount\":\"2444,88\"}",Point3.class);
+        Log.d("Point3",point3.getMoney_amount().toString());
+        TextView txt3 = (TextView) findViewById(R.id.textView6);
+        txt3.setText(point3.getMoney_amount().toString());
+        //4
+        DateExample temp = new DateExample(new Date());
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(DateExample.class,new DateSerializer())
+                .create();
+        String json = gson.toJson(temp);
+        TextView txt = (TextView) findViewById(R.id.textView8);
+        txt.setText(json);
+        Log.d("Point4",json);
     }
 
-    public static void start(Context context) {
-        Intent intent = new Intent(context, ExplActivity.class);
-        context.startActivity(intent);
-    }
 }

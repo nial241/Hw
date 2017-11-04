@@ -1,14 +1,8 @@
 <resources>
     <string name="app_name">HW</string>
-    <string name="activity_label_1">label1</string>
-    <string name="expl_activity_text">Активити, созданная с помощью явного интента :)</string>
-    <string name="ok_btn_txt">ОК</string>
-    <string name="cancel_btn_txt">ОТМЕНА</string>
-    <string name="input_text_view">Введите текст</string>
-    <string name="correct_input_txt">Текст введен верно</string>
-    <string name="incorrect_input_txt">Текст введен неверно</string>
-    <string name="share_btn">Поделиться</string>
-    <string name="next_btn">Проверить</string>
-    <string name="temp_txt">textView</string>
-    <string name="add_activity_txt">Добавить явную активити</string>
+    <string name="text1">Пункт 1. {"name":"name","any_map":{"a":"55","b":"85","c":"56\"} - исключается поле name</string>
+    <string name="text2">Пункт 2. </string>
+    <string name="text3">Пункт 3. BIGDECIMAL:</string>
+    <string name="text4">Пункт 4. </string>
+    <string name="temp_txt">TextView</string>
 </resources>
