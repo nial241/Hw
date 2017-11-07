@@ -32,13 +32,14 @@ public class MainActivity extends AppCompatActivity {
         TextView txt1 = (TextView) findViewById(R.id.textView2);
         txt1.setText(json_with_ignored_field);
         //2
-        /*Type stringStringMap = new TypeToken<HashMap<String,HashMap<Object,Object>>>(){}.getType();
-        Gson g = new Gson();
-        HashMap<String,HashMap<Object,Object>> mp = new Gson().fromJson(
-                "{\"name\":\"name\",\"any_map\":{\"a\":\"55\",\"b\":\"85\",\"c\":\"56\"}}",stringStringMap);
-        Log.d("test",mp.toString());
-        */
-
+        Gson g2 = new GsonBuilder()
+                .registerTypeAdapter(Point2.class, new Point2Deserializer())
+                .create();
+        Point2 point2 = g2.fromJson("{\"name\":\"name\",\"any_map\":{\"a\":\"55\",\"b\":\"85\",\"c\":\"56\"}}",
+                Point2.class);
+        Log.d("Point 2",point2.toString());
+        TextView txt2 = (TextView) findViewById(R.id.textView4);
+        txt2.setText(point2.getAny_map().toString());
         //3
         Gson g3 = new GsonBuilder()
                 .registerTypeAdapter(Point3.class, new Point3Deserializer())

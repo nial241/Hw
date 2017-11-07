@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">HW</string>
     <string name="text1">Пункт 1. {"name":"name","any_map":{"a":"55","b":"85","c":"56\"} - исключается поле name</string>
-    <string name="text2">Пункт 2. </string>
+    <string name="text2">Пункт 2. HashMap из any_map </string>
     <string name="text3">Пункт 3. BIGDECIMAL:</string>
     <string name="text4">Пункт 4. </string>
     <string name="temp_txt">TextView</string>
